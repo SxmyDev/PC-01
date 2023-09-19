@@ -1,0 +1,26 @@
+{% extends "mycrud/layout.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="text-3xl font-semibold mt-8 text-white">List of Tasks</h1>
+    <ul class="mt-4">
+        {% for tarea in tareas %}
+        <li class="py-2 border-b text-white">{{ tarea }}</li>
+        <div class="mt-2">
+            <a href='{% url "eliminar_tarea" tarea.id %}' class="text-red-500 hover:text-red-700 mr-4">Eliminar</a>
+            <a href='{% url "editar_tarea" tarea.id %}' class="text-blue-500 hover:text-blue-700">Editar</a>
+        </div>
+        {% endfor %}
+    </ul>
+    <h1 class="text-3xl font-semibold mt-8 text-white">List of Products</h1>
+    <ul class="mt-4">
+        {% for producto in productos %}
+        <li class="py-2 border-b text-white">{{ producto }}</li>
+        <div class="mt-2">
+            <a href='{% url "eliminar_producto" producto.id %}' class="text-red-500 hover:text-red-700 mr-4">Eliminar</a>
+            <a href='{% url "editar_producto" producto.id %}' class="text-blue-500 hover:text-blue-700">Editar</a>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

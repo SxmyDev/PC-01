@@ -1,0 +1,59 @@
+{% load compress %}
+{% load static %}
+
+{% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+{% endcompress %}
+
+<header class="bg-blue-500 py-4 text-white fixed w-full">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-semibold"><a href="{% url 'home' %}">Manager</a></h1>
+        {% if request.path == '/' %}
+            <div class="flex space-x-3">
+                <a href="{% url 'agregar_tarea' %}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Agregar Tarea</a>
+                <a href="{% url 'agregar_producto' %}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded">Agregar Producto</a>
+            </div>
+        {% else %}
+            <div class="flex space-x-3">
+                <a href="{% url 'agregar_tarea' %}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded invisible">Agregar Tarea</a>
+                <a href="{% url 'agregar_producto' %}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded invisible">Agregar Producto</a>
+            </div>
+        {% endif %}
+    </div>
+</header>
+
+<body class="bg-gray-900 font-sans">
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6 m-0">
+            <h1 class="text-3xl font-semibold text-center mb-4">Editar Producto</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-medium mb-2" for="{{ form.nombre.id_for_label }}">Nombre</label>
+                    <input type="text" name="{{ form.nombre.name }}" id="{{ form.nombre.id_for_label }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" value="{{ producto.nombre }}"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-medium mb-2" for="{{ form.descripcion.id_for_label }}">Descripción</label>
+                    <textarea name="{{ form.descripcion.name }}" id="{{ form.descripcion.id_for_label }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">{{ producto.descripcion }}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-medium mb-2" for="{{ form.precio.id_for_label }}">Precio</label>
+                    <input type="number" name="{{ form.precio.name }}" id="{{ form.precio.id_for_label }}" step="0.01" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" value="{{ producto.precio }}"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-medium mb-2" for="{{ form.imagen.id_for_label }}">Imagen Actual</label>
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="w-full border rounded">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm font-medium mb-2" for="{{ form.imagen.id_for_label }}">Nueva Imagen</label>
+                    <input type="file" name="{{ form.imagen.name }}" id="{{ form.imagen.id_for_label }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" />
+                </div>
+                
+                <div class="text-center">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block">Editar Producto</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</body>

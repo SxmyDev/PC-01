@@ -1,0 +1,37 @@
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager</title>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+</head>
+<body class="bg-gray-900 font-sans">
+    <header class="bg-blue-500 py-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-semibold"><a href="{% url 'home' %}">Manager</a></h1>
+            {% if request.path == '/' %}
+                <div class="flex space-x-3">
+                    <a href="{% url 'agregar_tarea' %}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Agregar Tarea</a>
+                    <a href="{% url 'agregar_producto' %}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded">Agregar Producto</a>
+                </div>
+            {% else %}
+                <div class="flex space-x-3">
+                    <a href="{% url 'agregar_tarea' %}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded invisible">Agregar Tarea</a>
+                    <a href="{% url 'agregar_producto' %}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded invisible">Agregar Producto</a>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+    <div class="container mx-auto p-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
